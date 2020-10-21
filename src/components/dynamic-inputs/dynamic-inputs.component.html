@@ -1,0 +1,64 @@
+<div class="card">
+    <div class="card_header">Display rules</div>
+    <div class="card_content">
+        <div class="selection_wrapper">
+            <div class="selection_title">
+                Inclusion Rules
+            </div>
+            <div class="selection_subtitle">
+                Where would you like to display your campaign?
+            </div>
+            <div *ngFor="let rule of inclusionRulesArray.value; let i = index; trackBy:trackByFn"
+                style="display: flex; align-items: flex-start; justify-content: flex-start;">
+                <div>
+                    <div class="select"
+                        [ngClass]="{'hovered': selectOptionsToShow.selectNumber === selectNumber.FIRST && selectOptionsToShow.formGroupPosition === i}"
+                        (click)="openSelection(selectNumber.FIRST, i)">
+                        {{inclusionRulesArray.value[i].first}}
+                        <div class="select_arrow">˅</div>
+                    </div>
+                    <div *ngIf="selectOptionsToShow.selectNumber === selectNumber.FIRST && selectOptionsToShow.formGroupPosition === i"
+                        class="select_option_container">
+                        <div *ngFor="let option of firstSelectOptions" class="select_option"
+                            (click)="selectOption(i, option, 'first')">
+                            <div style="width: 20px; text-align: center;">
+                                <span *ngIf="option === firstSelect">✓</span>
+                            </div>
+                            {{option}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="formGroupList[i].controls.first.value === 'Custom'">
+                    <div class="select"
+                        [ngClass]="{'hovered': selectOptionsToShow.selectNumber === selectNumber.SECOND && selectOptionsToShow.formGroupPosition === i}"
+                        (click)="openSelection(selectNumber.SECOND, i)">
+                        {{inclusionRulesArray.value[i].second}}
+                        <div class="select_arrow">˅</div>
+                    </div>
+                    <div *ngIf="selectOptionsToShow.selectNumber === selectNumber.SECOND && selectOptionsToShow.formGroupPosition === i"
+                        class="select_option_container">
+                        <div *ngFor="let option of secondSelectOptions" class="select_option"
+                            (click)="selectOption(i, option, 'second')">
+                            <div style="width: 20px; text-align: center;">
+                                <span *ngIf="option === firstSelect">✓</span>
+                            </div>{{option}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="formGroupList[i].controls.first.value === 'Custom'">
+                    <input [formControl]="formGroupList[i].controls.third" class="select"
+                        [ngClass]="{'hovered': selectOptionsToShow.selectNumber === selectNumber.THIRD && selectOptionsToShow.formGroupPosition === i}"
+                        placeholder="Type a full or partial URL" />
+                    <div class="validation_error" *ngIf="formGroupList[i].controls.third.invalid">URL is missing</div>
+                </div>
+
+                <div class="remove_button" (click)="removeRule(i)">
+                    <div style="transform: scale(0.9, 0.7);">X</div>
+                </div>
+            </div>
+            <div (click)="addRule()" class="add_button">
+                <div style="font-size: 18px;">+</div> &nbsp; new rule
+            </div>
+        </div>
+    </div>
+</div>
