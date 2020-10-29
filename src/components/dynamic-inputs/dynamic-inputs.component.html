@@ -1,0 +1,132 @@
+<div class="card">
+    <div class="card_header">Display rules</div>
+    <div class="card_content">
+        <div class="selection_wrapper">
+            <div class="selection_title">
+                Inclusion Rules
+            </div>
+            <div class="selection_subtitle">
+                Where would you like to display your campaign?
+            </div>
+            <ng-container *ngIf="selectListToShow$ | async as selectListToShow">
+                <div *ngFor="let rule of inclusionRulesArray.value; let i = index; trackBy:trackByFn"
+                    class="rowStartStartWrap">
+                    <div>
+                        <div class="select"
+                            [ngClass]="{'hovered': selectListToShow.selectNumber === selectNumber.FIRST && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.INCLUSION}"
+                            (click)="handleOptionListView(selectNumber.FIRST, i, ruleType.INCLUSION)">
+                            {{rule.first}}
+                            <div class="select_arrow">˅</div>
+                        </div>
+                        <div *ngIf="selectListToShow.selectNumber === selectNumber.FIRST && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.INCLUSION"
+                            class="select_option_container">
+                            <div *ngFor="let option of firstSelectOptions" class="select_option"
+                                (click)="selectOption(i, option, 'first', ruleType.INCLUSION)">
+                                <div class="select_option_checkmark">
+                                    <span *ngIf="option === inclusionRulesArray.value[i].first">✓</span>
+                                </div>
+                                {{option}}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="inclusionFormGroupList[i].controls.first.value === 'Custom'">
+                        <div class="select"
+                            [ngClass]="{'hovered': selectListToShow.selectNumber === selectNumber.SECOND && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.INCLUSION}"
+                            (click)="handleOptionListView(selectNumber.SECOND, i, ruleType.INCLUSION)">
+                            {{rule.second}}
+                            <div class="select_arrow">˅</div>
+                        </div>
+                        <div *ngIf="selectListToShow.selectNumber === selectNumber.SECOND && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.INCLUSION"
+                            class="select_option_container">
+                            <div *ngFor="let option of secondSelectOptions" class="select_option"
+                                (click)="selectOption(i, option, 'second', ruleType.INCLUSION)">
+                                <div class="select_option_checkmark">
+                                    <span *ngIf="option === inclusionRulesArray.value[i].second">✓</span>
+                                </div>{{option}}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="inclusionFormGroupList[i].controls.first.value === 'Custom'">
+                        <input [formControl]="inclusionFormGroupList[i].controls.third" class="select"
+                            [ngClass]="{'hovered': selectListToShow.selectNumber === selectNumber.THIRD && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.INCLUSION}"
+                            placeholder="Type a full or partial URL" />
+                        <div class="validation_error" *ngIf="inclusionFormGroupList[i].controls.third.invalid">URL is
+                            missing
+                        </div>
+                    </div>
+
+                    <div class="remove_button" (click)="removeRule(i)">
+                        <div class="remove_button_crossmark">X</div>
+                    </div>
+                </div>
+            </ng-container>
+            <div (click)="addRule(ruleType.INCLUSION)" class="add_button">
+                <div class="add_button_plusmark">+</div> &nbsp; new rule
+            </div>
+        </div>
+
+        <div class="selection_wrapper">
+            <div class="selection_title">
+                Exclusion Rules
+            </div>
+            <div class="selection_subtitle">
+                Where would you like to NOT display your campaign?
+            </div>
+            <ng-container *ngIf="selectListToShow$ | async as selectListToShow">
+                <div *ngFor="let rule of exclusionRulesArray.value; let i = index; trackBy:trackByFn"
+                    class="rowStartStartWrap">
+                    <div>
+                        <div class="select"
+                            [ngClass]="{'hovered': selectListToShow.selectNumber === selectNumber.FIRST && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.EXCLUSION}"
+                            (click)="handleOptionListView(selectNumber.FIRST, i, ruleType.EXCLUSION)">
+                            {{rule.first}}
+                            <div class="select_arrow">˅</div>
+                        </div>
+                        <div *ngIf="selectListToShow.selectNumber === selectNumber.FIRST && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.EXCLUSION"
+                            class="select_option_container">
+                            <div *ngFor="let option of firstSelectOptions" class="select_option"
+                                (click)="selectOption(i, option, 'first', ruleType.EXCLUSION)">
+                                <div class="select_option_checkmark">
+                                    <span *ngIf="option === exclusionRulesArray.value[i].first">✓</span>
+                                </div>
+                                {{option}}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="exclusionFormGroupList[i].controls.first.value === 'Custom'">
+                        <div class="select"
+                            [ngClass]="{'hovered': selectListToShow.selectNumber === selectNumber.SECOND && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.EXCLUSION}"
+                            (click)="handleOptionListView(selectNumber.SECOND, i, ruleType.EXCLUSION)">
+                            {{rule.second}}
+                            <div class="select_arrow">˅</div>
+                        </div>
+                        <div *ngIf="selectListToShow.selectNumber === selectNumber.SECOND && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.EXCLUSION"
+                            class="select_option_container">
+                            <div *ngFor="let option of secondSelectOptions" class="select_option"
+                                (click)="selectOption(i, option, 'second', ruleType.EXCLUSION)">
+                                <div class="select_option_checkmark">
+                                    <span *ngIf="option === exclusionRulesArray.value[i].second">✓</span>
+                                </div>{{option}}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="exclusionFormGroupList[i].controls.first.value === 'Custom'">
+                        <input [formControl]="exclusionFormGroupList[i].controls.third" class="select"
+                            [ngClass]="{'hovered': selectListToShow.selectNumber === selectNumber.THIRD && selectListToShow.formGroupPosition === i && selectListToShow.ruleType === ruleType.EXCLUSION}"
+                            placeholder="Type a full or partial URL" />
+                        <div class="validation_error" *ngIf="exclusionFormGroupList[i].controls.third.invalid">URL is
+                            missing
+                        </div>
+                    </div>
+
+                    <div class="remove_button" (click)="removeRule(i)">
+                        <div class="remove_button_crossmark">X</div>
+                    </div>
+                </div>
+            </ng-container>
+            <div (click)="addRule(ruleType.EXCLUSION)" class="add_button">
+                <div class="add_button_plusmark">+</div> &nbsp; new rule
+            </div>
+        </div>
+    </div>
+</div>
