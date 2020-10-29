@@ -21,7 +21,6 @@ export interface OptionsSelection {
   ruleType: RULE_TYPE;
 }
 
-
 @Component({
   selector: 'app-dynamic-inputs',
   templateUrl: './dynamic-inputs.component.html',
